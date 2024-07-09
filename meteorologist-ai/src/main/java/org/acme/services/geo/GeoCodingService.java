@@ -1,6 +1,7 @@
-package org.acme.services;
+package org.acme.services.geo;
 
 
+import io.quarkus.cache.CacheResult;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
@@ -13,6 +14,7 @@ public interface GeoCodingService {
 
     @GET
     @Path("/search")
+    @CacheResult(cacheName = "geo-results")
     GeoResults search(@QueryParam("name") String name, @QueryParam("count") int count);
 
 }
