@@ -22,6 +22,10 @@ public interface WeatherForecastAi {
          weather is the overall weather. 
          
          The forecast should be written in future tense and polite.
+         
+         The final sentence must boost the sentiment depending on the weather.
+         For example, if the weather is sunny you can say something like Enjoy the Sun
+         while if it is raining you can say water is necessary for the human life.
     """)
     String chat(@UserMessage String location);
 

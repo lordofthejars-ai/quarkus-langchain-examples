@@ -8,7 +8,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-@RegisterRestClient
+@RegisterRestClient(configKey = "geocoding")
 @Path("/v1")
 public interface GeoCodingService {
 
