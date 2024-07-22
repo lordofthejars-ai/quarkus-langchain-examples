@@ -34,7 +34,7 @@ public class DeveloperResource {
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(1000, tokenizer);
 
         UserMessage userMessage1 = userMessage(
-                "How to write a REST endpoint in Java? ");
+                "How to write a REST endpoint in Java using Quarkus? ");
         chatMemory.add(userMessage1);
 
         System.out.println("[User]: " + userMessage1.text() + System.lineSeparator());
