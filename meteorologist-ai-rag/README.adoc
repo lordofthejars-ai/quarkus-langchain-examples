@@ -1,0 +1,8 @@
+= Meteorologist
+
+Advanced RAG use case where the data is augmented by querying the open-meteo[https://open-meteo.com/] API with the given city.
+
+Then the model creates a texted forecast summarizing the weather.
+
+Moreover, Cache extension is used to avoid calls to geo location service.
+
