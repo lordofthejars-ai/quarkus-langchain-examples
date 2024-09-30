@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Bot</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Chat Bot</h1>
+        </header>
+        <div class="chat-window" id="chat-window">
+            <!-- Messages will be dynamically appended here -->
+        </div>
+        <div class="default-buttons">
+        {#for text in texts}
+            <button class="default-btn" onclick="insertDefaultText('{text.full}')">{text.button}</button>
+        {/for}
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeydown="handleEnter(event)">
+            <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
