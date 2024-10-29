@@ -16,24 +16,24 @@ import java.util.List;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
-@Priority(10)
 @Decorator
 public class SemanticCachedAssistance implements Assistant {
 
-    @Inject
-    RedisEmbeddingStore embeddingStore;
+    // Interface to Redis instance
+    @Inject RedisEmbeddingStore embeddingStore;
 
     // Used for calculating vectors
-    @Inject
-    EmbeddingModel embeddingModel;
+    @Inject EmbeddingModel embeddingModel;
 
-    @Inject
-    @Any
+    // LangChain4J AI service
+    @Any @Inject
     @Delegate
     Assistant assistant;
 
     @Override
     public String chat(String message) {
+
+        logger.infof("Message: %s ", message);
 
         final Embedding embedding = getEmbedding(message);
         final List<EmbeddingMatch<TextSegment>> matches =
