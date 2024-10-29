@@ -4,13 +4,15 @@ import com.github.tjake.jlama.model.AbstractModel;
 import com.github.tjake.jlama.model.functions.Generator;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
 import java.util.Map;
 import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class JailbreakModel {
 
-    @Inject
+    @Named("jailbreak")
     AbstractModel model;
 
     @Inject
