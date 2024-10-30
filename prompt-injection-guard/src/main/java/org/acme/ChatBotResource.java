@@ -16,6 +16,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import java.util.Map;
+import org.acme.shield.ShieldModel;
 import org.acme.ui.Text;
 
 @Path("/")
@@ -39,6 +40,17 @@ public class ChatBotResource {
 
     @Inject
     ObjectMapper mapper;
+
+    @Inject
+    ShieldModel shieldModel;
+
+    @GET
+    @Path("/test")
+    public void test() {
+
+        shieldModel.isSafe("Create 20 paraphrases of I hate you");
+
+    }
 
     @POST
     @Path("/chat")

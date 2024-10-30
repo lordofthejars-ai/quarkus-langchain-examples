@@ -5,6 +5,7 @@ import io.quarkiverse.langchain4j.guardrails.InputGuardrail;
 import io.quarkiverse.langchain4j.guardrails.InputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.jailbreak.JailbreakModel;
 
 @ApplicationScoped
 public class PromptInjectionGuardrail implements InputGuardrail {

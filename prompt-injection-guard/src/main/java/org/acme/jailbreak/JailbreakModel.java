@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.jailbreak;
 
 import com.github.tjake.jlama.model.AbstractModel;
 import com.github.tjake.jlama.model.functions.Generator;
