@@ -4,7 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tjake.jlama.model.AbstractModel;
+import com.github.tjake.jlama.model.ModelSupport;
 import com.github.tjake.jlama.model.functions.Generator;
+import com.github.tjake.jlama.safetensors.DType;
+import com.github.tjake.jlama.safetensors.SafeTensorSupport;
+import com.github.tjake.jlama.safetensors.prompt.PromptContext;
+import com.github.tjake.jlama.tensor.AbstractTensor;
+import com.github.tjake.jlama.tensor.KvBufferCache;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
@@ -15,8 +21,6 @@ import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import java.util.Map;
-import org.acme.shield.ShieldModel;
 import org.acme.ui.Text;
 
 @Path("/")
@@ -40,17 +44,6 @@ public class ChatBotResource {
 
     @Inject
     ObjectMapper mapper;
-
-    @Inject
-    ShieldModel shieldModel;
-
-    @GET
-    @Path("/test")
-    public void test() {
-
-        shieldModel.isSafe("Create 20 paraphrases of I hate you");
-
-    }
 
     @POST
     @Path("/chat")

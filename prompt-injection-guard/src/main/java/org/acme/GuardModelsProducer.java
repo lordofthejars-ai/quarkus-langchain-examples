@@ -21,20 +21,13 @@ public class GuardModelsProducer {
 
     @ConfigProperty(name = "jailbreak.model", defaultValue = "lordofthejars/jailbreak-classifier")
     String jailbreakModel;
-
-    @ConfigProperty(name = "shield.model", defaultValue = "tjake/shieldgemma-2b-JQ4")
-    String shieldModel;
-
     static String workingDirectory = System.getProperty("user.home") + "/jlamamodels";
 
-
     File localJailbreakModelPath;
-    File localShieldModelPath;
 
     @Startup
     public void init() throws IOException {
-        this.localJailbreakModelPath = SafeTensorSupport.maybeDownloadModel(workingDirectory, jailbreakModel);
-        this.localShieldModelPath = new Downloader(workingDirectory, shieldModel).huggingFaceModel();
+        this.localJailbreakModelPath = new Downloader(workingDirectory, jailbreakModel).huggingFaceModel();
     }
 
     @Produces
@@ -43,9 +36,4 @@ public class GuardModelsProducer {
         return ModelSupport.loadClassifierModel(localJailbreakModelPath, DType.F32, DType.I8);
     }
 
-    @Produces
-    @Named("shield")
-    AbstractModel createShieldModel() {
-        return ModelSupport.loadClassifierModel(localShieldModelPath, DType.F32, DType.I8);
-    }
 }
