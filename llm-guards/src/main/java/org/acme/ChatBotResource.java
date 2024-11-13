@@ -14,6 +14,7 @@ import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.acme.secrets.SecretsDetector;
 import org.acme.toxicity.ToxicModel;
 import org.acme.ui.Text;
 
@@ -63,4 +64,16 @@ public class ChatBotResource {
     public boolean checkToxicity() {
         return toxicModel.isToxic("I love this");
     }
+
+    @Inject
+    SecretsDetector secretsDetector;
+
+    @GET
+    @Path("test2")
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean checkSecrets() {
+        String text = "Hello SECRET='1234567890abcdefABCDEFghijklmnopQRSTUVwx'";
+        return secretsDetector.isASecretPresent(text);
+    }
+
 }
