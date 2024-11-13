@@ -3,14 +3,7 @@ package org.acme;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.tjake.jlama.model.AbstractModel;
-import com.github.tjake.jlama.model.ModelSupport;
-import com.github.tjake.jlama.model.functions.Generator;
-import com.github.tjake.jlama.safetensors.DType;
-import com.github.tjake.jlama.safetensors.SafeTensorSupport;
-import com.github.tjake.jlama.safetensors.prompt.PromptContext;
-import com.github.tjake.jlama.tensor.AbstractTensor;
-import com.github.tjake.jlama.tensor.KvBufferCache;
+
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
@@ -21,6 +14,7 @@ import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.acme.toxicity.ToxicModel;
 import org.acme.ui.Text;
 
 @Path("/")
@@ -58,5 +52,15 @@ public class ChatBotResource {
 
         return objectNode;
 
+    }
+
+    @Inject
+    ToxicModel toxicModel;
+
+    @GET
+    @Path("test")
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean checkToxicity() {
+        return toxicModel.isToxic("I love this");
     }
 }

@@ -21,13 +21,20 @@ public class GuardModelsProducer {
 
     @ConfigProperty(name = "jailbreak.model", defaultValue = "lordofthejars/jailbreak-classifier")
     String jailbreakModel;
+
+    @ConfigProperty(name = "toxic.model", defaultValue = "lordofthejars/toxic-bert")
+    String toxicModel;
+
     static String workingDirectory = System.getProperty("user.home") + "/jlamamodels";
 
     File localJailbreakModelPath;
+    File localToxicModelPath;
+
 
     @Startup
     public void init() throws IOException {
         this.localJailbreakModelPath = new Downloader(workingDirectory, jailbreakModel).huggingFaceModel();
+        this.localToxicModelPath = new Downloader(workingDirectory, toxicModel).huggingFaceModel();
     }
 
     @Produces
@@ -35,5 +42,12 @@ public class GuardModelsProducer {
     AbstractModel createJailbreakModel() {
         return ModelSupport.loadClassifierModel(localJailbreakModelPath, DType.F32, DType.I8);
     }
+
+    @Produces
+    @Named("toxic")
+    AbstractModel createToxicModel() {
+        return ModelSupport.loadClassifierModel(localToxicModelPath, DType.F32, DType.I8);
+    }
+
 
 }
