@@ -12,7 +12,7 @@
     <properties>
 
     <quarkus.platform.version>3.16.0.CR1</quarkus.platform.version>
-    <langchain4j.extension.version>0.21.0.CR1</langchain4j.extension.version>
+    <langchain4j.extension.version>0.21.0</langchain4j.extension.version>
   </properties>
   
 </project>
