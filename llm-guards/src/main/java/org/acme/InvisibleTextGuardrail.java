@@ -5,21 +5,20 @@ import io.quarkiverse.langchain4j.guardrails.InputGuardrail;
 import io.quarkiverse.langchain4j.guardrails.InputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.acme.jailbreak.JailbreakModel;
+import org.acme.invisible.InvisibleCharactersScanner;
 
 @ApplicationScoped
-public class PromptInjectionGuardrail implements InputGuardrail {
+public class InvisibleTextGuardrail implements InputGuardrail {
 
     @Inject
-    JailbreakModel jailbreakModel;
-
-    // change to new api to get the input text
+    InvisibleCharactersScanner invisibleCharactersScanner;
 
     @Override
     public InputGuardrailResult validate(UserMessage userMessage) {
         final String fullPrompt = userMessage.singleText();
-        final String prompt = fullPrompt.substring(fullPrompt.indexOf(':') + 1);
+        invisibleCharactersScanner.removeInvisibleCharacters(fullPrompt);
 
-        return jailbreakModel.isSafe(prompt) ? success() : failure("Jailbreak or Prompt Injection");
+        return success();
     }
+
 }
