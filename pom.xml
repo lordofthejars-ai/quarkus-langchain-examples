@@ -11,8 +11,8 @@
 
     <properties>
 
-    <quarkus.platform.version>3.16.0.CR1</quarkus.platform.version>
-    <langchain4j.extension.version>0.21.0</langchain4j.extension.version>
+    <quarkus.platform.version>3.16.4</quarkus.platform.version>
+    <langchain4j.extension.version>0.22.0.CR2</langchain4j.extension.version>
   </properties>
   
 </project>
