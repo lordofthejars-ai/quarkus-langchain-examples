@@ -1,5 +1,6 @@
 package org.acme;
 
+import ai.djl.translate.TranslateException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.acme.competitors.CompetitorsModel;
 import org.acme.secrets.SecretsDetector;
 import org.acme.toxicity.ToxicModel;
 import org.acme.ui.Text;
@@ -74,6 +76,17 @@ public class ChatBotResource {
     public boolean checkSecrets() {
         String text = "Hello SECRET='1234567890abcdefABCDEFghijklmnopQRSTUVwx'";
         return secretsDetector.isASecretPresent(text);
+    }
+
+    @Inject
+    CompetitorsModel competitorsModel;
+
+    @GET
+    @Path("test3")
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean checkCompetitors() throws TranslateException {
+        String text = "This is for Nintendo";
+        return competitorsModel.isCompetitorCited(text);
     }
 
 }
