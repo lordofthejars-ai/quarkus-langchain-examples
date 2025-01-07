@@ -25,6 +25,9 @@ import jakarta.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.acme.huggingface.HuggingFaceDownloader;
+import org.acme.huggingface.Model;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
@@ -41,6 +44,7 @@ public class GuardModelsProducer {
     HuggingFaceDownloader huggingFaceDownloader;
 
     static String workingDirectory = System.getProperty("user.home") + "/jlamamodels";
+    static String workingDirectoryHF = System.getProperty("user.home") + "/jlamamodels";
 
     File localJailbreakModelPath;
     File localToxicModelPath;
@@ -55,7 +59,7 @@ public class GuardModelsProducer {
         this.localJailbreakModelPath = new Downloader(workingDirectory, jailbreakModel).huggingFaceModel();
         this.localToxicModelPath = new Downloader(workingDirectory, toxicModel).huggingFaceModel();
 
-        final Path cloned = huggingFaceDownloader.clone("lordofthejars/competitors");
+        final Path cloned = huggingFaceDownloader.download(Paths.get(workingDirectoryHF), new Model("lordofthejars", "nuner-competitors"));
 
         logger.infof("Model cloned at %s", cloned.toAbsolutePath());
 
