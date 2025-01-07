@@ -18,16 +18,19 @@ public class CompetitorsModel {
     @Inject
     Predictor<String, NamedEntity[]> predictor;
 
-    public boolean isCompetitorCited(String text) throws TranslateException {
+    public boolean isCompetitorCited(String text) {
 
-        final NamedEntity[] predicted = predictor.predict(text);
+        final NamedEntity[] predicted;
+        try {
+            predicted = predictor.predict(text);
+        } catch (TranslateException e) {
+            return false;
+        }
 
-        Arrays.stream(predicted)
-            .filter(p -> p.getScore() > 0.9)
-            .map(NamedEntity::getEntity)
-            .forEach(System.out::println);
-
-        return false;
+        return Arrays.stream(predicted)
+                .filter(p -> p.getScore() > 0.9)
+                .map(e -> e.getWord().substring(1))
+                .anyMatch(competitors::contains);
 
     }
 
