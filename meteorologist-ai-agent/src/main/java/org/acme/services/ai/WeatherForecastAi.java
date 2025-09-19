@@ -5,7 +5,6 @@ import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.SessionScoped;
 
-@SessionScoped
 @RegisterAiService(tools = WeatherContentRetriever.class)
 public interface WeatherForecastAi {
 

@@ -2,16 +2,11 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme</groupId>
   <artifactId>memory</artifactId>
   <version>1.0.0</version>
   <name>Quarkus langchain4j - Sample - Memory</name>
 
-  <parent>
-    <groupId>org.acme</groupId>
-    <artifactId>quarkus-langchain4j-examples-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
 
   <properties>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
@@ -22,6 +17,8 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
+      <quarkus.platform.version>3.26.1</quarkus.platform.version>
+      <quarkus.langchain4j.version>1.1.4</quarkus.langchain4j.version>
   </properties>
 
   <dependencyManagement>
@@ -39,32 +36,36 @@
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+      <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkiverse.langchain4j</groupId>
       <artifactId>quarkus-langchain4j-openai</artifactId>
-      <version>${langchain4j.extension.version}</version>
+      <version>${quarkus.langchain4j.version}</version>
     </dependency>
 
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <goals>
-              <goal>build</goal>
-              <goal>generate-code</goal>
-              <goal>generate-code-tests</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+        <plugin>
+            <groupId>${quarkus.platform.group-id}</groupId>
+            <artifactId>quarkus-maven-plugin</artifactId>
+            <version>${quarkus.platform.version}</version>
+            <extensions>true</extensions>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>build</goal>
+                        <goal>generate-code</goal>
+                        <goal>generate-code-tests</goal>
+                        <goal>native-image-agent</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <jvmArgs>--add-opens=java.base/java.lang=ALL-UNNAMED</jvmArgs>
+            </configuration>
+        </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>

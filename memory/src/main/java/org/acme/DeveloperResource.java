@@ -1,8 +1,8 @@
 package org.acme;
 
-import static dev.langchain4j.data.message.UserMessage.userMessage;
-import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO;
 
+
+import dev.langchain4j.model.chat.ChatModel;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -10,52 +10,14 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 import dev.langchain4j.chain.ConversationalChain;
-import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.TokenWindowChatMemory;
-import dev.langchain4j.model.Tokenizer;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.openai.OpenAiTokenizer;
-import dev.langchain4j.model.output.Response;
+
 
 @Path("/code")
 public class DeveloperResource {
 
     @Inject
-    private ChatLanguageModel model;
+    private ChatModel model;
 
-    @GET
-    @Path("/rest")
-    @Produces(MediaType.TEXT_PLAIN)
-    public void createRestEndpoint() {
-
-        Tokenizer tokenizer = new OpenAiTokenizer(GPT_3_5_TURBO);
-        ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(1000, tokenizer);
-
-        UserMessage userMessage1 = userMessage(
-                "How to write a REST endpoint in Java using Quarkus? ");
-        chatMemory.add(userMessage1);
-
-        System.out.println("[User]: " + userMessage1.text() + System.lineSeparator());
-
-        final Response<AiMessage> response1 = model.generate(chatMemory.messages());
-        chatMemory.add(response1.content());
-
-        System.out.println("[LLM]: " + response1.content().text() + System.lineSeparator());
-
-        UserMessage userMessage2 = userMessage(
-                "Create a test of the first point? " +
-                        "Be short, 15 lines of code maximum.");
-        chatMemory.add(userMessage2);
-
-        System.out.println("[User]: " + userMessage2.text() + System.lineSeparator());
-
-        final Response<AiMessage> response2 = model.generate(chatMemory.messages());
-
-        System.out.println("[LLM]: " + response2.content().text() + System.lineSeparator());
-
-    }
 
     @GET
     @Path("/k8s")
@@ -63,7 +25,7 @@ public class DeveloperResource {
     public void generateKubernetes() {
 
         ConversationalChain chain = ConversationalChain.builder()
-                .chatLanguageModel(model)
+                .chatModel(model)
                 .build();
 
         String userMessage1 = "Can you give a brief explanation of Kubernetes, 3 lines max?";
